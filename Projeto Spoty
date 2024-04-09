@@ -1,10 +1,170 @@
 package br.com.alura.minhasmusicas.modelos;
-
 public class Audio {
     private String titulo;
     private int totalReproducoes;
     private int totalCurtidas;
     private double classificacao;
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+
+    }
+
+    public int getTotalReproducoes() {
+        return totalReproducoes;
+    }
+
+    public int getTotalCurtidas() {
+        return totalCurtidas;
+    }
+
+    public double getClassificacao() {
+        return classificacao;
+    }
+    public void curte() {
+        this.totalCurtidas++;
+    }
+
+    public void reproduz() {
+        this.totalReproducoes++;
+    }
+
+
+
 }
+
+package br.com.alura.minhasmusicas.modelos;
+
+public class Musica extends Audio {
+    private String album;
+    private String cantor;
+    private String genero;
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getCantor() {
+        return cantor;
+    }
+
+    public void setCantor(String cantor) {
+        this.cantor = cantor;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    @Override
+    public double getClassificacao() {
+        if (this.getTotalReproducoes() > 2000){
+            return 10;
+        }
+        else {
+            return 7;
+        }
+    }
+
+package br.com.alura.minhasmusicas.modelos;
+
+public class Podcast extends Audio {
+    private String apresentador;
+    private String descricao;
+
+    public String getApresentador() {
+        return apresentador;
+    }
+
+    public void setApresentador(String apresentador) {
+        this.apresentador = apresentador;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public double getClassificacao() {
+        if (this.getTotalCurtidas() > 500) {
+            return 10;
+        } else {
+            return 8;
+        }
+
+    }
+
+
+}
+
+import br.com.alura.minhasmusicas.modelos.Audio;
+
+public class MinhasPreferidas {
+    public void inclui(Audio audio) {
+        if (audio.getClassificacao() >= 9) {
+            System.out.println(audio.getTitulo() + " é considerado sucesso absoluto e preferido por todos!");
+        } else {
+            System.out.println(audio.getTitulo() + " também é um dos que todo mundo está curtindo");
+        }
+    }
+}
+
+package br.com.alura.minhasmusicas.principal;
+import br.com.alura.minhasmusicas.MinhasPreferidas;
+import br.com.alura.minhasmusicas.modelos.Musica;
+import br.com.alura.minhasmusicas.modelos.Podcast;
+
+public class Principal {
+    public static void main(String[] args) {
+        Musica minhaMusica = new Musica();
+        minhaMusica.setTitulo("Forever");
+        minhaMusica.setCantor("Kiss");
+
+
+        for (int i = 0; i < 1000; i++) {
+            minhaMusica.reproduz();
+        }
+
+        for (int i = 0; i < 50; i++) {
+            minhaMusica.curte();
+        }
+
+        Podcast meuPodcast = new Podcast();
+        meuPodcast.setTitulo("BolhaDev");
+        meuPodcast.setApresentador("Marcos Mendes");
+
+
+        for (int i = 0; i < 5000; i++) {
+            meuPodcast.reproduz();
+        }
+
+        for (int i = 0; i < 1000; i++) {
+            meuPodcast.curte();
+        }
+
+        MinhasPreferidas preferidas = new MinhasPreferidas();
+        preferidas.inclui(meuPodcast);
+        preferidas.inclui(minhaMusica);
+
+    }
+}
+}
+
+
 
